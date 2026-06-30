@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  redis:
+    image: redis:apline
+  api:
+    build: ./api
+    ports: 
+      - "8000":"5000"
+    enviroment:
+      - REDIS_HOST = redis
+    dependes_on:
+      - redis
+  worker:
+    build: ./worker
+    environmet:
+      - REDIS_HOST = redis
+    depends_on: 
+      - redis
