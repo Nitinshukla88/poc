@@ -2,18 +2,20 @@ version: '3.8'
 
 services:
   redis:
-    image: redis:apline
+    image: redis:alpine
   api:
     build: ./api
     ports: 
-      - "8000":"5000"
-    enviroment:
-      - REDIS_HOST = redis
-    dependes_on:
+      - "8000:5000"
+    environment:
+      - REDIS_HOST=redis
+      - PYTHONUNBUFFERED=1
+    depends_on:
       - redis
   worker:
     build: ./worker
-    environmet:
-      - REDIS_HOST = redis
+    environment:
+      - REDIS_HOST=redis
+      - PYTHONUNBUFFERED=1
     depends_on: 
       - redis
