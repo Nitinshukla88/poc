@@ -6,6 +6,11 @@ pipeline {
 	} 
 	stages {
 		stage('Test') {
+			agent {
+				docker {
+					image 'python:3.11-slim'
+				}
+			}
 			steps {
 				sh "pip install -r api/requirements.txt"
 				sh "pytest api/test_app.py"
