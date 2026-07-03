@@ -12,8 +12,13 @@ pipeline {
 				}
 			}
 			steps {
-				sh "pip install -r api/requirements.txt"
-				sh "pytest api/test_app.py"
+				sh '''
+					python -m venv venv 
+					. venv/bin/activate
+					pip install --upgrade pip
+					pip install -r api/requirements.txt
+					pytest api/test_app.py
+				'''
 			}
 		}
 		stage('Build') {
