@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api-deployment
+  labels:
+    app: api-main
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: api-main
+  template:
+    metadata:
+      labels:
+        app: api-main
+    spec:
+      containers:
+      - name: api-container
+        image: nitinxyz/poc-api:latest
+        imagePullPolicy: Always
+        env:
+          - name: REDIS_HOST
+            value: redis-service
+        ports:
+        - containerPort: 5000
