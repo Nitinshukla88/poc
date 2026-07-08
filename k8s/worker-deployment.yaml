@@ -15,9 +15,8 @@ spec:
         app: worker-main
     spec:
       containers:
-      - name: api-container
+      - name: worker-container
         image: nitinxyz/poc-worker:latest
-        imagePullPolicy: Always
         env:
           - name: REDIS_HOST
             value: redis-service
