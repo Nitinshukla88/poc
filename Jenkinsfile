@@ -39,6 +39,17 @@ pipeline {
             				sh "docker push ${DOCKER_USERNAME}/poc-worker:${IMAGE_TAG}"
         			}
     			}
+		}
+		stage('Deploy') {
+			steps {
+				sh '''
+					kubectl rollout restart deployment/api-deployment
+					kubectl rollout status deployment/api-deployment
+
+					kubectl rollout restart deployment/worker-deployment
+					kubectl rollout status deployment/worker-deployment
+				'''
+			}
 		}	
 	}
 }
