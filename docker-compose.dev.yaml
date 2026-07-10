@@ -1,0 +1,19 @@
+services:
+  redis:
+    image: redis:alpine
+  api:
+    build: ./api
+    ports:
+      - "8000:5000"
+    environment:
+      - REDIS_HOST=redis
+      - PYTHONUNBUFFERED=1
+    depends_on:
+      - redis
+  worker:
+    build: ./worker
+    environment:
+      - REDIS_HOST=redis
+      - PYTHONUNBUFFERED=1
+    depends_on:
+      - redis
