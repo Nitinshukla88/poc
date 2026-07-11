@@ -11,6 +11,11 @@ def get_tasks():
     completed_tasks = r.lrange("completed", 0, -1)
     return jsonify({"pending" : [json.loads(t) for t in pending_tasks], "completed" : [json.loads(t) for t in completed_tasks]})
 
+@app.get('/version')
+def get_version():
+    return jsonify({ 
+            "message" : "Hello from API v1"
+    })
 @app.post('/tasks')
 def post_tasks():
     print("Received POST request!", flush=True)
