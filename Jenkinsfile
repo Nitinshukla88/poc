@@ -2,7 +2,8 @@ pipeline {
 	agent any
 	environment {
 		DOCKER_USERNAME = "nitinxyz"
-		IMAGE_TAG = "${BUILD_NUMBER}"		
+		IMAGE_TAG = "${BUILD_NUMBER}"
+		KUBECONFIG = "/usr/local/share/kube/config"		
 	} 
 	stages {
 		stage('Test') {
