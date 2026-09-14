@@ -11,7 +11,7 @@ RUN curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/s
 RUN chmod +x kubectl && \
     mv kubectl /usr/local/bin/
 
-RUN groupmod -g 989 docker && \
+RUN groupmod -g 1001 docker && \
     usermod -aG docker jenkins
 
 USER jenkins
