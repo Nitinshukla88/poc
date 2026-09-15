@@ -14,7 +14,7 @@ def get_tasks():
 @app.get('/version')
 def get_version():
     return jsonify({ 
-            "message" : "Hello hi there! from the API v2 in september 2026 "
+            "message" : "Hi everyone, this is the version endpoint. Use it to check the version"
     })
 @app.post('/tasks')
 def post_tasks():
