@@ -40,6 +40,20 @@ pipeline {
         			}
     			}
 		}
+		stage('Test Git Push Access') {
+    			steps {
+        			sshagent(['github-jenkins-ssh']) {
+            				sh '''
+                				git config user.name "Jenkins"
+                				git config user.email "jenkins@localhost"
+
+                				git remote -v
+
+                				git ls-remote origin HEAD
+            				'''
+        			}
+    			}
+		}
 		stage('Deploy') {
 			steps {
 				sh '''
