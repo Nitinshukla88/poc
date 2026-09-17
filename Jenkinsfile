@@ -50,6 +50,19 @@ pipeline {
         			'''
     			}
 		}
+		stage('Commit and Push Manifest') {
+    			steps {
+        			sshagent(['github-jenkins-ssh']) {
+            				sh '''
+                				git add k8s/api-deployment.yaml
+
+                				git commit -m "Update API image to ${IMAGE_TAG}"
+
+                				git push origin main
+            				'''
+        			}
+    			}
+		}
 		stage('Deploy') {
 			steps {
 				sh '''
