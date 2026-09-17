@@ -66,15 +66,9 @@ pipeline {
 		stage('Deploy') {
 			steps {
 				sh '''
-					kubectl set image deployment/api-deployment \
-						api-container=${DOCKER_USERNAME}/poc-api:${IMAGE_TAG}
+					kubectl apply -f k8s/api-deployment.yaml
 					
 					kubectl rollout status deployment/api-deployment
-
-					kubectl set image deployment/worker-deployment \
-						worker-container=${DOCKER_USERNAME}/poc-worker:${IMAGE_TAG}
-
-					kubectl rollout status deployment/worker-deployment
 				'''
 			}
 		}	
