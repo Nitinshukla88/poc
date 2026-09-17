@@ -40,18 +40,14 @@ pipeline {
         			}
     			}
 		}
-		stage('Test Git Push Access') {
+		stage('Update Manifest') {
     			steps {
-        			sshagent(['github-jenkins-ssh']) {
-            				sh '''
-                				git config user.name "Jenkins"
-                				git config user.email "jenkins@localhost"
+        			sh '''
+            				sed -i "s|image: nitinxyz/poc-api:.*|image: nitinxyz/poc-api:${IMAGE_TAG}|" k8s/api-deployment.yaml
 
-                				git remote -v
-
-                				git ls-remote origin HEAD
-            				'''
-        			}
+            				echo "Updated API manifest:"
+            				grep "image:" k8s/api-deployment.yaml
+        			'''
     			}
 		}
 		stage('Deploy') {
