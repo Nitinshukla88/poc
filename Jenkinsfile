@@ -58,7 +58,7 @@ pipeline {
 
                 				git commit -m "Update API image to ${IMAGE_TAG}"
 
-                				git push origin main
+                				git push origin HEAD:main
             				'''
         			}
     			}
