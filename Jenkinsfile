@@ -56,7 +56,7 @@ pipeline {
             				sh '''
                 				git add k8s/api-deployment.yaml
 
-                				git commit -m "Update API image to ${IMAGE_TAG}"
+                				git commit -m "Update API image to ${IMAGE_TAG} [jenkins-deploy]"
 
                 				git push origin HEAD:main
             				'''
