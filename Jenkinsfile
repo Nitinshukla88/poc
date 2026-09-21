@@ -5,6 +5,14 @@ pipeline {
 		IMAGE_TAG = "${BUILD_NUMBER}"		
 	} 
 	stages {
+		stage('SCM Skip') {
+            		steps {
+                		scmSkip(
+                    			deleteBuild: true,
+                    			skipPattern: '.*\\[jenkins-deploy\\].*'
+                		)
+            		}
+        	}
 		stage('Test') {
 			agent {
 				docker {
