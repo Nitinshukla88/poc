@@ -48,6 +48,14 @@ pipeline {
         			}
     			}
 		}
+		stage('Get Previous Version') {
+    			steps {
+        			sh '''
+            				CURRENT_IMAGE=$(grep 'image: nitinxyz/poc-api:' k8s/api-deployment.yaml)
+            				echo "Current manifest image: $CURRENT_IMAGE"
+        			'''
+    			}
+		}
 		stage('Update Manifest') {
     			steps {
         			sh '''
