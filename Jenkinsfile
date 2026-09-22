@@ -88,8 +88,7 @@ pipeline {
 				script {
 					try {
 						sh '''
-							kubectl set image deployment/api-deployment \
-								api-container=nitinxyz/poc-api:999
+							kubectl apply -f k8s/api-deployment.yaml
 							kubectl rollout status deployment/api-deployment --timeout=60s
 						'''
 					} catch (Exception e) {
