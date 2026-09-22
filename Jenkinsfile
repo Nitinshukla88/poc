@@ -73,12 +73,24 @@ pipeline {
 		}
 		stage('Deploy') {
 			steps {
-				sh '''
-					kubectl apply -f k8s/api-deployment.yaml
-					
-					kubectl rollout status deployment/api-deployment
-				'''
+				script {
+					try {
+						sh '''
+							kubectl set image deployment/api-deployment \
+								api-container=nitinxyz/poc-api:999
+							kubectl rollout status deployment/api-deployment --timeout=60s
+						'''
+					} catch (Exception e) {
+
+						echo "Deployment failed. Rolling back..."
+						sh '''
+							kubectl rollout undo deployment/api-deployment
+							kubectl rollout status deployment/api-deployment --timeout=60s
+						'''
+						throw e
+					}
+				}
 			}
-		}	
+		}
 	}
 }
