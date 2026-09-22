@@ -106,6 +106,16 @@ pipeline {
         						echo "Manifest after rollback:"
         						grep "image:" k8s/api-deployment.yaml
 						'''
+
+						sshagent(['github-jenkins-ssh']) {
+    							sh '''
+        							git add k8s/api-deployment.yaml
+
+        							git commit -m "Rollback API image to ${PREVIOUS_IMAGE} [jenkins-deploy]"
+
+        							git push origin HEAD:main
+    							'''
+						}
 						throw e
 					}
 				}
