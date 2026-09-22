@@ -50,10 +50,14 @@ pipeline {
 		}
 		stage('Get Previous Version') {
     			steps {
-        			sh '''
-            				CURRENT_IMAGE=$(grep 'image: nitinxyz/poc-api:' k8s/api-deployment.yaml)
-            				echo "Current manifest image: $CURRENT_IMAGE"
-        			'''
+        			script {
+            				env.PREVIOUS_IMAGE = sh(
+                			script: "grep 'image: nitinxyz/poc-api:' k8s/api-deployment.yaml | awk '{print \$2}'",
+                			returnStdout: true
+            				).trim()
+
+            				echo "Previous image: ${env.PREVIOUS_IMAGE}"
+        			}
     			}
 		}
 		stage('Update Manifest') {
