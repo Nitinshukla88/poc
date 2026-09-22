@@ -98,6 +98,13 @@ pipeline {
 						sh '''
 							kubectl rollout undo deployment/api-deployment
 							kubectl rollout status deployment/api-deployment --timeout=60s
+
+							echo "Restoring Git manifest to ${PREVIOUS_IMAGE}"
+
+        						sed -i "s|image: nitinxyz/poc-api:.*|image: ${PREVIOUS_IMAGE}|" k8s/api-deployment.yaml
+
+        						echo "Manifest after rollback:"
+        						grep "image:" k8s/api-deployment.yaml
 						'''
 						throw e
 					}
