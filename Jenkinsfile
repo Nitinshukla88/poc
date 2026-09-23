@@ -98,6 +98,14 @@ pipeline {
 						sh '''
 							kubectl apply -f k8s/api-deployment.yaml
 							kubectl rollout status deployment/api-deployment --timeout=60s
+
+							kubectl run health-check \
+            						--rm \
+           						--restart=Never \
+            						--image=curlimages/curl \
+            						-- curl --fail http://api-service:5000/version
+
+        						echo "Application health check successful."
 						'''
 					} catch (Exception e) {
 
