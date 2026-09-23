@@ -101,6 +101,7 @@ pipeline {
 
 							kubectl run health-check \
             						--rm \
+							-i \
            						--restart=Never \
             						--image=curlimages/curl \
             						-- curl --fail http://api-service:5000/version
