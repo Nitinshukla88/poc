@@ -127,14 +127,22 @@ pipeline {
         						grep "image:" k8s/api-deployment.yaml
 						'''
 
-						sshagent(['github-jenkins-ssh']) {
-    							sh '''
-        							git add k8s/api-deployment.yaml
+						try {
+    							sshagent(['github-jenkins-ssh']) {
+        							sh '''
+            								git add k8s/api-deployment.yaml
+            								git commit -m "Rollback API image to ${PREVIOUS_IMAGE} [jenkins-deploy]"
+            								git push origin HEAD:main
+        							'''
+    							}
 
-        							git commit -m "Rollback API image to ${PREVIOUS_IMAGE} [jenkins-deploy]"
+    							echo "Git manifest rollback succeeded."
 
-        							git push origin HEAD:main
-    							'''
+						} catch (Exception gitError) {
+
+    							echo "Git manifest rollback FAILED."
+
+    							error "CRITICAL: Kubernetes rolled back successfully, but Git manifest rollback failed."
 						}
 						throw e
 					}
