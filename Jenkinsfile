@@ -102,9 +102,22 @@ pipeline {
 					} catch (Exception e) {
 
 						echo "Deployment failed. Rolling back..."
+						try {
+        						sh '''
+            							kubectl rollout undo deployment/api-deployment
+            							kubectl rollout status deployment/api-deployment --timeout=60s
+        						'''
+
+        						echo "Kubernetes rollback succeeded."
+
+    						} catch (Exception rollbackError) {
+
+        						echo "Kubernetes rollback FAILED."
+
+        						error "CRITICAL: Deployment failed and Kubernetes rollback also failed."
+    						}
+
 						sh '''
-							kubectl rollout undo deployment/api-deployment
-							kubectl rollout status deployment/api-deployment --timeout=60s
 
 							echo "Restoring Git manifest to ${PREVIOUS_IMAGE}"
 
