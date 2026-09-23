@@ -62,7 +62,7 @@ pipeline {
                 				error "Could not determine PREVIOUS_IMAGE from k8s/api-deployment.yaml"
             				}
 
-            				if (!(env.PREVIOUS_IMAGE ==~ /nitinxyz\\/poc-api:\\S+/)) {
+            				if (!(env.PREVIOUS_IMAGE ==~ /nitinxyz\/poc-api:\S+/)) {
                 				error "Invalid PREVIOUS_IMAGE: ${env.PREVIOUS_IMAGE}"
             				}
         			}
