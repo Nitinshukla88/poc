@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: api-container
-        image: nitinxyz/poc-api:34
+        image: nitinxyz/poc-api:35
         imagePullPolicy: Always
         env:
           - name: REDIS_HOST
