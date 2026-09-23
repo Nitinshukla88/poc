@@ -1,8 +1,7 @@
 pipeline {
 	agent any
 	environment {
-		DOCKER_USERNAME = "nitinxyz"
-		IMAGE_TAG = "${BUILD_NUMBER}"		
+		DOCKER_USERNAME = "nitinxyz"		
 	} 
 	stages {
 		stage('SCM Skip') {
@@ -11,6 +10,18 @@ pipeline {
                     			deleteBuild: true,
                     			skipPattern: '.*\\[jenkins-deploy\\].*'
                 		)
+            		}
+        	}
+		stage('Get Git Commit') {
+            		steps {
+                		script {
+                    			env.IMAGE_TAG = sh(
+                        			script: "git rev-parse --short HEAD",
+                        			returnStdout: true
+                    			).trim()
+
+                    			echo "Git commit: ${env.IMAGE_TAG}"
+                		}
             		}
         	}
 		stage('Test') {
