@@ -30,3 +30,10 @@ spec:
             port: 5000
           initialDelaySeconds: 5
           periodSeconds: 10
+
+        livenessProbe:
+          httpGet:
+            path: /version
+            port: 5000
+          initialDelaySeconds: 10
+          periodSeconds: 20
