@@ -23,3 +23,10 @@ spec:
             value: redis-service
         ports:
         - containerPort: 5000
+
+        readinessProbe:
+          httpGet:
+            path: /version
+            port: 5000
+          initialDelaySeconds: 5
+          periodSeconds: 10
