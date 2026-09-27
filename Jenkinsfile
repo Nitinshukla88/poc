@@ -43,7 +43,6 @@ pipeline {
 		stage('Build') {
 			steps {
 				sh "docker build -t ${DOCKER_USERNAME}/poc-api:${IMAGE_TAG} ./api"
-				sh "docker build -t ${DOCKER_USERNAME}/poc-worker:${IMAGE_TAG} ./worker"
 			}
 		}
 		stage('Push') {
@@ -55,7 +54,6 @@ pipeline {
         			)]) {
             				sh "echo $PASSWORD | docker login -u $USERNAME --password-stdin"
             				sh "docker push ${DOCKER_USERNAME}/poc-api:${IMAGE_TAG}"
-            				sh "docker push ${DOCKER_USERNAME}/poc-worker:${IMAGE_TAG}"
         			}
     			}
 		}
