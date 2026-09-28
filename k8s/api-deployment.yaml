@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: api-container
-        image: nitinxyz/poc-api:bad-rollback-test
+        image: nitinxyz/poc-api:caa0e9e
         imagePullPolicy: IfNotPresent
         env:
           - name: REDIS_HOST
