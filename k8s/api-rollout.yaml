@@ -1,0 +1,48 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
+metadata:
+  name: api-rollout
+  labels:
+    app: api-main
+spec:
+  replicas: 2
+
+  selector:
+    matchLabels:
+      app: api-main
+
+  strategy:
+    canary:
+      stableService: api-service
+      canaryService: api-canary-service
+
+      steps:
+        - setWeight: 50
+        - pause: {}
+
+  template:
+    metadata:
+      labels:
+        app: api-main
+    spec:
+      containers:
+        - name: api-container
+          image: nitinxyz/poc-api:caa0e9e
+          imagePullPolicy: IfNotPresent
+
+          ports:
+            - containerPort: 5000
+
+          readinessProbe:
+            httpGet:
+              path: /version
+              port: 5000
+            initialDelaySeconds: 5
+            periodSeconds: 10
+
+          livenessProbe:
+            httpGet:
+              path: /version
+              port: 5000
+            initialDelaySeconds: 10
+            periodSeconds: 20
