@@ -60,10 +60,10 @@ pipeline {
 		stage('Update Manifest') {
     			steps {
         			sh '''
-            				sed -i "s|image: nitinxyz/poc-api:.*|image: nitinxyz/poc-api:${IMAGE_TAG}|" k8s/api-deployment.yaml
+            				sed -i "s|image: nitinxyz/poc-api:.*|image: nitinxyz/poc-api:${IMAGE_TAG}|" k8s/api-rollout.yaml
 
             				echo "Updated API manifest:"
-            				grep "image:" k8s/api-deployment.yaml
+            				grep "image:" k8s/api-rollout.yaml
         			'''
     			}
 		}
@@ -71,7 +71,7 @@ pipeline {
     			steps {
         			sshagent(['github-jenkins-ssh']) {
             				sh '''
-                				git add k8s/api-deployment.yaml
+                				git add k8s/api-rollout.yaml
 
                 				git commit -m "Update API image to ${IMAGE_TAG} [jenkins-deploy]"
 
