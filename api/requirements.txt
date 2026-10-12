@@ -1,3 +1,4 @@
 flask
 redis
 pytest
+prometheus-client
