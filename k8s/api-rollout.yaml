@@ -31,7 +31,7 @@ spec:
     spec:
       containers:
         - name: api-container
-          image: nitinxyz/poc-api:5ace780
+          image: nitinxyz/poc-api:8b49047
           imagePullPolicy: IfNotPresent
 
           ports:
