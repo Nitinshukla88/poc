@@ -1,0 +1,28 @@
+scrapeConfigs:
+  api-stable:
+    enabled: true
+    job_name: api-stable
+    metrics_path: /metrics
+    kubernetes_sd_configs:
+      - role: endpoints
+        namespaces:
+          names:
+            - default
+    relabel_configs:
+      - source_labels: [__meta_kubernetes_service_name]
+        action: keep
+        regex: api-service
+
+  api-canary:
+    enabled: true
+    job_name: api-canary
+    metrics_path: /metrics
+    kubernetes_sd_configs:
+      - role: endpoints
+        namespaces:
+          names:
+            - default
+    relabel_configs:
+      - source_labels: [__meta_kubernetes_service_name]
+        action: keep
+        regex: api-canary-service

@@ -1,0 +1,32 @@
+
+apiVersion: argoproj.io/v1alpha1
+kind: AnalysisTemplate
+metadata:
+  name: canary-error-rate
+  namespace: default
+spec:
+  metrics:
+    - name: canary-error-rate
+      interval: 1m
+      count: 5
+      successCondition: result[0] < 0.05
+      failureCondition: result[0] >= 0.05
+      provider:
+        prometheus:
+          address: http://prometheus-server.monitoring.svc.cluster.local
+          query: |
+            (
+              sum(
+                rate(http_requests_total{
+                  job="api-canary",
+                  status=~"5.."
+                }[5m])
+              ) or vector(0)
+            )
+            /
+            sum(
+              rate(http_requests_total{
+                job="api-canary"
+              }[5m])
+            )
+
