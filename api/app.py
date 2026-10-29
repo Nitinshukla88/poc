@@ -67,7 +67,7 @@ def get_version():
             "going to test the canary deployment"
             "This is the start of testing the canary deployment" 
         ),
-        "version": "v10",
+        "version": "v11",
     })
 
 
