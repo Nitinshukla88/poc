@@ -65,6 +65,7 @@ def get_version():
             "Hi everyone, this is the version endpoint. "
             "Use it to check the version. Also with this we're "
             "going to test the canary deployment"
+            "This is the start of testing the canary deployment" 
         ),
         "version": "v10",
     })
