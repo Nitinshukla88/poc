@@ -63,8 +63,14 @@ def get_version():
     return jsonify({
         "message": "Simulated canary failure",
         "version": "v12"
-    }), 500
+    }), 200
 
+@app.get("/failure-test")
+def failure_test():
+    return jsonify({
+        "message": "Simulated internal server error",
+        "version": "v12"
+    }), 500
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", debug=False)
